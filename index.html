@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>استبيان دراسة السوق — تواصل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #ffffff;
+    --mist: #f2f6f3;
+    --line: #d9e2dc;
+    --ink: #13231c;
+    --ink-soft: #4a5a52;
+    --brand: #0b5d3b;
+    --brand-strong: #08472d;
+    --brand-soft: #e2efe7;
+    --danger: #b42318;
+    --danger-soft: #fef0ee;
+    --bubble: #dcf8c6;
+    --bubble-ink: #111b21;
+    --chat-bg: #efeae2;
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0f1a15;
+      --mist: #16241d;
+      --line: #2a3b33;
+      --ink: #e7efe9;
+      --ink-soft: #a9b9b0;
+      --brand: #3fae7a;
+      --brand-strong: #5cc492;
+      --brand-soft: #1b3a2b;
+      --danger: #ff8a7a;
+      --danger-soft: #3a1d19;
+      --bubble: #005c4b;
+      --bubble-ink: #e9edef;
+      --chat-bg: #0b141a;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0f1a15; --mist: #16241d; --line: #2a3b33; --ink: #e7efe9; --ink-soft: #a9b9b0;
+    --brand: #3fae7a; --brand-strong: #5cc492; --brand-soft: #1b3a2b; --danger: #ff8a7a; --danger-soft: #3a1d19;
+    --bubble: #005c4b; --bubble-ink: #e9edef; --chat-bg: #0b141a; color-scheme: dark;
+  }
+  *, *::before, *::after { box-sizing: inherit; }
+  html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 16px); }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans Arabic", Tahoma, "Segoe UI", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-text-size-adjust: 100%;
+  }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--paper); }
+  :focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+  .wrap { max-width: 640px; margin: 0 auto; padding: 20px 16px 120px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+  .brand { display: flex; align-items: center; gap: 10px; color: var(--brand); font-weight: 700; font-size: 20px; }
+  .brand svg { width: 34px; height: 34px; }
+  .brand small { display: block; color: var(--ink-soft); font-weight: 500; font-size: 13px; line-height: 1.3; }
+  .icon-btn { border: 1px solid var(--line); background: var(--paper); color: var(--ink-soft); border-radius: 12px; min-height: 44px; padding: 0 14px; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .icon-btn:hover { color: var(--ink); background: var(--mist); }
+
+  /* Who are we interviewing? — two large choices */
+  .who { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+  .who button {
+    text-align: start; border: 2px solid var(--line); background: var(--paper); color: var(--ink);
+    border-radius: 18px; padding: 14px 16px; cursor: pointer; font: inherit;
+  }
+  .who button strong { display: block; font-size: 18px; }
+  .who button span { display: block; color: var(--ink-soft); font-size: 14px; line-height: 1.5; }
+  .who button[aria-pressed="true"] { border-color: var(--brand); background: var(--brand-soft); }
+  .who button[aria-pressed="true"] strong { color: var(--brand-strong); }
+
+  .notice { border-radius: 14px; padding: 12px 14px; margin-bottom: 18px; font-size: 15px; }
+  .notice.warn { background: #fff4dc; color: #6b4600; }
+  :root[data-theme="dark"] .notice.warn { background: #3a2e12; color: #f5d48a; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .notice.warn { background: #3a2e12; color: #f5d48a; } }
+  .notice button { margin-inline-start: 6px; }
+
+  section.part { padding: 22px 0 6px; border-top: 1px solid var(--line); }
+  section.part:first-of-type { border-top: 0; padding-top: 4px; }
+  section.part > h2 { margin: 0 0 4px; font-size: 20px; }
+  .explain { background: var(--mist); border-inline-start: 4px solid var(--brand); border-radius: 0 12px 12px 0; padding: 10px 14px; margin: 10px 0 6px; color: var(--ink); font-size: 15.5px; }
+  :root[dir="rtl"] .explain, [dir="rtl"] .explain { border-radius: 12px 0 0 12px; }
+  .explain b { display: block; color: var(--brand-strong); font-size: 14px; }
+
+  .q { margin: 18px 0 0; border: 0; padding: 0; min-width: 0; }
+  .q > legend, .q > label.qlabel { display: block; font-weight: 600; margin-bottom: 8px; padding: 0; }
+  .req { color: var(--danger); margin-inline-start: 3px; }
+  .opt { color: var(--ink-soft); font-weight: 400; font-size: 14px; }
+  .hint { color: var(--ink-soft); font-size: 14px; margin: -4px 0 8px; }
+  .err { display: none; color: var(--danger); font-size: 14px; font-weight: 600; margin-top: 6px; }
+  .q.invalid .err { display: block; }
+  .q.invalid input[type="text"], .q.invalid input[type="tel"], .q.invalid select { border-color: var(--danger); }
+
+  input[type="text"], input[type="tel"], input[type="number"], select, textarea {
+    width: 100%; min-height: 50px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px;
+    background: var(--paper); color: var(--ink); font: inherit; font-size: 17px;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--brand); outline: none; box-shadow: 0 0 0 3px var(--brand-soft); }
+  textarea { min-height: 96px; resize: vertical; }
+  .ltr { direction: ltr; text-align: right; }
+
+  /* Answer chips: big targets for thumbs */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { position: relative; }
+  .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .chip span {
+    display: inline-flex; align-items: center; min-height: 46px; padding: 8px 16px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--paper); font-size: 16px; line-height: 1.4; user-select: none;
+  }
+  .chip input:checked + span { background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 600; }
+  .chip input:focus-visible + span { outline: 3px solid var(--brand); outline-offset: 2px; }
+  .other-input { margin-top: 8px; display: none; }
+  .other-input.show { display: block; }
+
+  .scale { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .scale .chip span { width: 100%; justify-content: center; font-size: 18px; font-weight: 700; border-radius: 12px; }
+  .scale-ends { display: flex; justify-content: space-between; color: var(--ink-soft); font-size: 13px; margin-top: 4px; }
+
+  .check { display: flex; gap: 12px; align-items: flex-start; background: var(--mist); border-radius: 14px; padding: 14px; cursor: pointer; }
+  .check input { width: 24px; height: 24px; margin-top: 2px; accent-color: var(--brand); flex-shrink: 0; }
+
+  /* Sticky bottom bar: progress + finish */
+  .bar {
+    position: fixed; inset: auto 0 0; z-index: 20; background: var(--paper); border-top: 1px solid var(--line);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+  .bar-in { max-width: 640px; margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+  .progress { flex: 1; min-width: 0; }
+  .progress p { margin: 0 0 4px; font-size: 14px; color: var(--ink-soft); }
+  .track { height: 6px; background: var(--mist); border-radius: 99px; overflow: hidden; }
+  .track i { display: block; height: 100%; width: 0; background: var(--brand); transition: width .25s; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 22px;
+    border-radius: 14px; border: 0; background: var(--brand); color: #fff; font: inherit; font-weight: 700; font-size: 17px;
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+  }
+  .btn:hover { background: var(--brand-strong); }
+  .btn.secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--line); }
+  .btn.secondary:hover { background: var(--mist); }
+  .btn.wa { background: #1fa855; }
+  .btn.wa:hover { background: #178a45; }
+  .btn.ghost { background: transparent; color: var(--ink-soft); border: 0; min-height: 44px; padding: 0 8px; font-weight: 600; }
+  .btn svg { width: 22px; height: 22px; }
+
+  /* Preview: the survey exactly as it will appear in WhatsApp */
+  #review[hidden], #form[hidden] { display: none; }
+  .review h2 { margin: 0 0 4px; font-size: 22px; }
+  .review > p { color: var(--ink-soft); margin: 0 0 14px; }
+  .chat { background: var(--chat-bg); border-radius: 18px; padding: 16px; max-height: 58vh; overflow-y: auto; }
+  .bubble {
+    background: var(--bubble); color: var(--bubble-ink); border-radius: 12px; border-start-end-radius: 2px;
+    padding: 10px 12px 6px; max-width: 92%; margin-inline-start: auto; white-space: pre-wrap; word-wrap: break-word;
+    font-family: "IBM Plex Sans Arabic", Tahoma, sans-serif; font-size: 15px; line-height: 1.6;
+    box-shadow: 0 1px 0.5px rgba(0,0,0,.13);
+  }
+  .bubble b { font-weight: 700; }
+  .bubble .time { display: block; text-align: left; font-size: 11px; opacity: .6; margin-top: 2px; }
+  .actions { display: grid; gap: 10px; margin-top: 16px; }
+  .actions .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .actions .row .btn { flex: 1; }
+  .toast { margin-top: 10px; color: var(--brand-strong); font-weight: 600; min-height: 1.5em; }
+
+  .history { margin-top: 34px; border-top: 1px solid var(--line); padding-top: 18px; }
+  .history h2 { font-size: 18px; margin: 0; }
+  .history > p { color: var(--ink-soft); font-size: 14px; margin: 2px 0 10px; }
+  .history ul { list-style: none; margin: 0; padding: 0; }
+  .history li { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+  .history li .who-tag { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 99px; background: var(--brand-soft); color: var(--brand-strong); white-space: nowrap; }
+  .history li .meta { flex: 1; min-width: 0; }
+  .history li .meta small { display: block; color: var(--ink-soft); font-size: 13px; }
+  .history li a { color: var(--brand); font-weight: 700; text-decoration: none; white-space: nowrap; }
+
+  dialog { border: 0; border-radius: 20px; padding: 22px; width: min(92vw, 440px); background: var(--paper); color: var(--ink); }
+  dialog::backdrop { background: rgba(0,0,0,.45); }
+  dialog h2 { margin: 0 0 6px; font-size: 20px; }
+  dialog p { color: var(--ink-soft); font-size: 15px; margin: 0 0 14px; }
+  dialog .row { display: flex; gap: 10px; margin-top: 16px; }
+  dialog .row .btn { flex: 1; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 22 C 9 8, 23 8, 25 22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="7" cy="23" r="3.5" fill="currentColor"/><circle cx="25" cy="23" r="3.5" fill="currentColor"/></svg>
+      <div>تواصل<small>استبيان دراسة السوق</small></div>
+    </div>
+    <button class="icon-btn" type="button" id="openSettings">رقم الاستلام</button>
+  </header>
+
+  <div id="setupNotice" class="notice warn" hidden>
+    لم يُحدَّد بعد رقم واتساب الذي تُرسَل إليه الاستبيانات.
+    <button class="icon-btn" type="button" data-open-settings>تحديد الرقم</button>
+  </div>
+
+  <div class="who" role="group" aria-label="نوع الاستبيان">
+    <button type="button" data-survey="provider" aria-pressed="true"><strong>مقدم خدمة</strong><span>فني، ورشة، أو صاحب نشاط</span></button>
+    <button type="button" data-survey="client" aria-pressed="false"><strong>زبون محتمل</strong><span>شخص يحتاج خدمات منزلية</span></button>
+  </div>
+
+  <form id="form" novalidate></form>
+
+  <div id="review" class="review" hidden>
+    <h2>راجع الاستبيان قبل الإرسال</h2>
+    <p>هكذا سيظهر في واتساب.</p>
+    <div class="chat"><div class="bubble" id="bubble"></div></div>
+    <div class="actions">
+      <a class="btn wa" id="sendWa" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 2s.8 2.3 1 2.5c.1.2 1.6 2.5 4 3.5 1.5.6 2 .7 2.8.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.4Z"/></svg>
+        إرسال إلى واتساب
+      </a>
+      <div class="row">
+        <button class="btn secondary" type="button" id="copyText">نسخ النص</button>
+        <button class="btn secondary" type="button" id="shareOther" hidden>مشاركة بطريقة أخرى</button>
+      </div>
+      <div class="row">
+        <button class="btn ghost" type="button" id="backToEdit">تعديل الإجابات</button>
+        <button class="btn ghost" type="button" id="newSurvey">بدء استبيان جديد</button>
+      </div>
+      <p class="toast" id="toast" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <section class="history" aria-labelledby="histTitle">
+    <h2 id="histTitle">الاستبيانات المرسلة من هذا الهاتف</h2>
+    <p id="histSummary">لا توجد استبيانات مرسلة بعد.</p>
+    <ul id="histList"></ul>
+  </section>
+</div>
+
+<div class="bar" id="bar">
+  <div class="bar-in">
+    <div class="progress">
+      <p id="progressText">0 من 0 أسئلة</p>
+      <div class="track"><i id="progressFill"></i></div>
+    </div>
+    <button class="btn" type="button" id="finish">إنهاء ومراجعة</button>
+  </div>
+</div>
+
+<dialog id="settings" aria-labelledby="settingsTitle">
+  <form method="dialog" id="settingsForm" novalidate>
+    <h2 id="settingsTitle">رقم واتساب لاستلام الاستبيانات</h2>
+    <p>يُحفظ على هذا الهاتف فقط. اكتب الرقم بأي صيغة، مثل 091 234 5678 أو ‎+218 91 234 5678.</p>
+    <input type="tel" id="waNumber" class="ltr" inputmode="tel" autocomplete="tel" placeholder="091 234 5678">
+    <p class="err" id="waError" style="display:none">اكتب رقماً صحيحاً.</p>
+    <div class="row">
+      <button class="btn" type="submit" value="save" id="saveNumber">حفظ الرقم</button>
+      <button class="btn secondary" type="button" id="closeSettings">إلغاء</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function () {
+  "use strict";
+
+  // ── Your WhatsApp number ────────────────────────────────────────────
+  // Put the number that should RECEIVE the surveys here, e.g. "218912345678"
+  // (country code 218, without the 0 or +). Leave empty to have each team
+  // member enter it on their phone instead.
+  var DEFAULT_WHATSAPP_NUMBER = "";
+
+  // ── The surveys ─────────────────────────────────────────────────────
+  var CITIES = ["طرابلس", "بنغازي", "مصراتة", "الزاوية", "زليتن", "الخمس", "سبها", "البيضاء", "طبرق", "أجدابيا", "سرت", "غريان", "درنة", "صبراتة", "ترهونة", "أخرى"];
+  var SERVICES = ["تكييف وتبريد", "كهرباء", "سباكة", "مولدات كهربائية", "خزانات ومضخات المياه", "تنظيف", "دهان وديكور", "تركيب الستلايت", "صيانة الأجهزة المنزلية", "نجارة", "ألمنيوم وزجاج", "نقل العفش", "دروس خصوصية", "تصوير", "أخرى"];
+  var OTHER = "أخرى";
+
+  // Shared first part: who did the interview, where, and consent
+  var INTERVIEW = {
+    title: "بيانات المقابلة",
+    questions: [
+      { id: "interviewer", label: "اسم الباحث", type: "text", required: true, remember: true },
+      { id: "city", label: "المدينة", type: "select", options: CITIES, required: true, remember: true, other: true },
+      { id: "area", label: "المنطقة أو الحي", type: "text", optional: true },
+      { id: "consent", label: "أوضحتُ للمشارك أن الإجابات لدراسة سوق، وأن ذكر الاسم والهاتف اختياري، ووافق على المشاركة.", type: "consent", required: true }
+    ]
+  };
+
+  var SURVEYS = {
+    provider: {
+      name: "مقدم خدمة",
+      sections: [
+        INTERVIEW,
+        { title: "عن العمل", questions: [
+          { id: "p_name", label: "اسم مقدم الخدمة أو النشاط", type: "text", optional: true },
+          { id: "p_phone", label: "رقم الهاتف", type: "tel", optional: true, hint: "للتواصل معه عند إطلاق التطبيق." },
+          { id: "p_category", label: "الخدمة الرئيسية التي يقدمها", type: "single", options: SERVICES, required: true, other: true },
+          { id: "p_years", label: "سنوات الخبرة", type: "single", options: ["أقل من سنة", "1–3 سنوات", "4–10 سنوات", "أكثر من 10 سنوات"] },
+          { id: "p_team", label: "يعمل", type: "single", options: ["بمفرده", "مع فريق صغير (2–5)", "شركة أو ورشة (أكثر من 5)"] },
+          { id: "p_coverage", label: "يخدم", type: "single", options: ["منطقته فقط", "المدينة كلها", "أكثر من مدينة"] }
+        ]},
+        { title: "الزبائن والعمل حالياً", questions: [
+          { id: "p_channels", label: "كيف يصل إليه الزبائن الآن؟", type: "multi", options: ["معارف وتوصيات", "فيسبوك أو إنستغرام", "مجموعات واتساب", "محل أو ورشة معروفة", "تطبيق أو موقع آخر", "لافتات وملصقات", OTHER], other: true },
+          { id: "p_jobs", label: "عدد الأعمال في الأسبوع تقريباً", type: "single", options: ["0–2", "3–5", "6–10", "أكثر من 10"] },
+          { id: "p_capacity", label: "هل يستطيع استقبال أعمال أكثر؟", type: "single", options: ["نعم، كثيراً", "قليلاً", "لا، مشغول بالكامل"] },
+          { id: "p_price", label: "متوسط سعر العمل الواحد (د.ل)", type: "number", optional: true },
+          { id: "p_problems", label: "أكبر المشاكل مع الزبائن", type: "multi", options: ["لا يحضرون أو يلغون في آخر لحظة", "المساومة على السعر", "تأخر الدفع", "طلبات غير جادة", "صعوبة الوصول إلى العنوان", "قلة الطلبات في بعض الأوقات", OTHER], other: true }
+        ]},
+        { title: "الهاتف والدفع", questions: [
+          { id: "p_smartphone", label: "هاتف ذكي وواتساب", type: "single", options: ["يستخدم الاثنين", "هاتف ذكي بدون واتساب", "لا يملك هاتفاً ذكياً"] },
+          { id: "p_internet", label: "جودة الإنترنت عنده", type: "single", options: ["جيدة", "متقطعة", "ضعيفة"] },
+          { id: "p_paymethods", label: "طرق الدفع المتاحة لديه", type: "multi", options: ["تحويل مصرفي", "سداد", "إدفع لي", "موبي كاش", "بطاقة تداول", "بطاقة مصرفية محلية", "نقداً فقط"] }
+        ]},
+        { title: "فكرة تطبيق تواصل",
+          explain: "تطبيق تصلك فيه طلبات زبائن من منطقتك. ترى تفاصيل العمل مجاناً، وتدفع رسماً صغيراً فقط عندما تقبل الطلب، فيظهر لك رقم الزبون وتتواصل معه على واتساب.",
+          questions: [
+          { id: "p_interest", label: "مدى اهتمامه بالتسجيل", type: "scale", required: true, ends: ["غير مهتم", "مهتم جداً"] },
+          { id: "p_model", label: "أي طريقة دفع للمنصة يفضّل؟", type: "single", options: ["رسم عند قبول كل طلب", "اشتراك شهري ثابت", "نسبة من قيمة العمل", "لا يقبل الدفع مقابل الخدمة"] },
+          { id: "p_leadprice", label: "كم يقبل أن يدفع مقابل طلب مؤكد؟", type: "single", options: ["أقل من 2 د.ل", "2–5 د.ل", "5–10 د.ل", "أكثر من 10 د.ل", "لا يعرف"] },
+          { id: "p_subscription", label: "اشتراك شهري مقبول له", type: "single", options: ["أقل من 50 د.ل", "50–100 د.ل", "100–200 د.ل", "أكثر من 200 د.ل", "لا يشترك"] },
+          { id: "p_reviews", label: "هل يقبل أن يقيّمه الزبائن علناً؟", type: "single", options: ["نعم", "نعم، بشرط حق الرد", "لا"] },
+          { id: "p_concerns", label: "ما الذي قد يمنعه من استخدام التطبيق؟", type: "multi", options: ["التكلفة", "لا يثق بالتطبيقات", "لا يريد ظهور رقمه", "التقييمات السلبية", "لا يعرف استخدام التطبيقات", "عنده زبائن كافون", OTHER], other: true },
+          { id: "p_early", label: "هل يريد التسجيل مبكراً مع رصيد مجاني؟", type: "single", options: ["نعم، سجّلوه", "ربما لاحقاً", "لا"] },
+          { id: "p_notes", label: "ملاحظات الباحث", type: "textarea", optional: true }
+        ]}
+      ]
+    },
+    client: {
+      name: "زبون محتمل",
+      sections: [
+        INTERVIEW,
+        { title: "عن المشارك", questions: [
+          { id: "c_name", label: "الاسم", type: "text", optional: true },
+          { id: "c_phone", label: "رقم الهاتف", type: "tel", optional: true, hint: "لإبلاغه عند إطلاق التطبيق." },
+          { id: "c_age", label: "العمر", type: "single", options: ["أقل من 25", "25–34", "35–44", "45–54", "55 فأكثر"] },
+          { id: "c_gender", label: "الجنس", type: "single", options: ["ذكر", "أنثى"], optional: true },
+          { id: "c_home", label: "نوع السكن أو المكان", type: "single", options: ["شقة", "منزل أو فيلا", "محل أو مكتب"] }
+        ]},
+        { title: "الخدمات والتجربة", questions: [
+          { id: "c_services", label: "الخدمات التي احتاجها خلال آخر 12 شهراً", type: "multi", options: SERVICES, required: true, other: true },
+          { id: "c_frequency", label: "كم مرة يحتاج فنياً تقريباً؟", type: "single", options: ["أسبوعياً", "شهرياً", "كل بضعة أشهر", "نادراً"] },
+          { id: "c_find", label: "كيف يجد الفني عادة؟", type: "multi", options: ["يعرفه شخصياً", "توصية من الأقارب أو الجيران", "فيسبوك", "مجموعات واتساب", "محل قريب", "تطبيق أو موقع", OTHER], other: true },
+          { id: "c_time", label: "كم يستغرق إيجاد فني مناسب؟", type: "single", options: ["في نفس اليوم", "1–3 أيام", "أكثر من 3 أيام", "أحياناً لا يجد"] },
+          { id: "c_problems", label: "مشاكل واجهها مع الفنيين", type: "multi", options: ["صعوبة إيجاد فني موثوق", "لا يحضر في الموعد", "السعر غير واضح أو مبالغ فيه", "جودة العمل ضعيفة", "لا يوجد ضمان", "صعوبة التواصل", OTHER], other: true },
+          { id: "c_spend", label: "آخر مبلغ دفعه مقابل خدمة (د.ل)", type: "number", optional: true },
+          { id: "c_priority", label: "أهم شيء عنده عند اختيار فني", type: "single", options: ["السعر", "التقييمات والسمعة", "الحضور في الموعد", "القرب من منطقته", "الضمان على العمل"] }
+        ]},
+        { title: "فكرة تطبيق تواصل",
+          explain: "تطبيق تبحث فيه عن فني حسب الخدمة والمنطقة، ترى الأسعار والتقييمات، تحجز موعداً، وتتواصل معه على واتساب بعد قبول الحجز. مجاني للزبائن.",
+          questions: [
+          { id: "c_interest", label: "مدى اهتمامه باستخدام التطبيق", type: "scale", required: true, ends: ["غير مهتم", "مهتم جداً"] },
+          { id: "c_contact", label: "يفضّل التواصل مع الفني عبر", type: "single", options: ["واتساب", "اتصال هاتفي", "رسائل داخل التطبيق"] },
+          { id: "c_pay", label: "يفضّل دفع أجرة الفني", type: "single", options: ["نقداً", "تحويل مصرفي", "دفع إلكتروني (سداد، موبي كاش، بطاقة)"] },
+          { id: "c_trust", label: "هل يثق بتقييمات الزبائن الآخرين؟", type: "single", options: ["نعم، كثيراً", "إلى حد ما", "لا"] },
+          { id: "c_device", label: "نوع هاتفه", type: "single", options: ["أندرويد", "آيفون", "لا يملك هاتفاً ذكياً"] },
+          { id: "c_notify", label: "هل يريد أن نبلغه عند الإطلاق؟", type: "single", options: ["نعم", "لا"] },
+          { id: "c_notes", label: "ملاحظات الباحث", type: "textarea", optional: true }
+        ]}
+      ]
+    }
+  };
+
+  // ── Storage (on this phone only; every call guarded) ───────────────
+  var store = {
+    get: function (k, d) { try { var v = localStorage.getItem("tawasul-survey:" + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set: function (k, v) { try { localStorage.setItem("tawasul-survey:" + k, JSON.stringify(v)); } catch (e) {} },
+    del: function (k) { try { localStorage.removeItem("tawasul-survey:" + k); } catch (e) {} }
+  };
+
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var toLatin = function (s) { return String(s).replace(/[٠-٩]/g, function (d) { return "٠١٢٣٤٥٦٧٨٩".indexOf(d); }).replace(/[۰-۹]/g, function (d) { return "۰۱۲۳۴۵۶۷۸۹".indexOf(d); }); };
+
+  var current = store.get("current", "provider");
+  if (!SURVEYS[current]) current = "provider";
+  var answers = {};
+  var form = $("#form");
+
+  // ── Render a survey ─────────────────────────────────────────────────
+  function fieldHtml(q) {
+    var reqMark = q.required ? '<span class="req" aria-hidden="true">*</span>' : "";
+    var optMark = q.optional ? ' <span class="opt">(اختياري)</span>' : "";
+    var hint = q.hint ? '<p class="hint" id="h_' + q.id + '">' + esc(q.hint) + "</p>" : "";
+    var err = '<p class="err" id="e_' + q.id + '">' + (q.type === "consent" ? "يجب تأكيد موافقة المشارك." : (q.type === "multi" ? "اختر إجابة واحدة على الأقل." : "هذا السؤال مطلوب.")) + "</p>";
+    var describedBy = (q.hint ? "h_" + q.id + " " : "") + "e_" + q.id;
+    var otherBox = q.other ? '<input type="text" class="other-input" id="' + q.id + '__other" data-other-for="' + q.id + '" placeholder="اكتب الإجابة" aria-label="' + esc(q.label) + ': أخرى">' : "";
+
+    if (q.type === "text" || q.type === "tel" || q.type === "number") {
+      var t = q.type === "number" ? 'type="text" inputmode="decimal" class="ltr"' : q.type === "tel" ? 'type="tel" inputmode="tel" class="ltr" autocomplete="off"' : 'type="text"';
+      return '<div class="q" data-q="' + q.id + '"><label class="qlabel" for="' + q.id + '">' + esc(q.label) + reqMark + optMark + "</label>" + hint +
+        "<input " + t + ' id="' + q.id + '" name="' + q.id + '" aria-describedby="' + describedBy + '"' + (q.required ? " required" : "") + ">" + err + "</div>";
+    }
+    if (q.type === "textarea") {
+      return '<div class="q" data-q="' + q.id + '"><label class="qlabel" for="' + q.id + '">' + esc(q.label) + optMark + "</label>" +
+        '<textarea id="' + q.id + '" name="' + q.id + '"></textarea></div>';
+    }
+    if (q.type === "select") {
+      return '<div class="q" data-q="' + q.id + '"><label class="qlabel" for="' + q.id + '">' + esc(q.label) + reqMark + "</label>" +
+        '<select id="' + q.id + '" name="' + q.id + '" aria-describedby="' + describedBy + '"><option value="">اختر…</option>' +
+        q.options.map(function (o) { return '<option value="' + esc(o) + '">' + esc(o) + "</option>"; }).join("") + "</select>" + otherBox + err + "</div>";
+    }
+    if (q.type === "consent") {
+      return '<div class="q" data-q="' + q.id + '"><label class="check"><input type="checkbox" id="' + q.id + '" name="' + q.id + '" aria-describedby="' + describedBy + '"><span>' + esc(q.label) + "</span></label>" + err + "</div>";
+    }
+    var kind = q.type === "multi" ? "checkbox" : "radio";
+    var opts = q.type === "scale" ? ["1", "2", "3", "4", "5"] : q.options;
+    var chips = opts.map(function (o) {
+      return '<label class="chip"><input type="' + kind + '" name="' + q.id + '" value="' + esc(o) + '"><span>' + esc(o) + "</span></label>";
+    }).join("");
+    var group = q.type === "scale" ? '<div class="chips scale">' + chips + '</div><div class="scale-ends" aria-hidden="true"><span>1 = ' + esc(q.ends[0]) + "</span><span>5 = " + esc(q.ends[1]) + "</span></div>" : '<div class="chips">' + chips + "</div>";
+    return '<fieldset class="q" data-q="' + q.id + '" aria-describedby="' + describedBy + '"><legend>' + esc(q.label) + reqMark + optMark +
+      (q.type === "multi" ? ' <span class="opt">(يمكن اختيار أكثر من إجابة)</span>' : "") + "</legend>" + hint + group + otherBox + err + "</fieldset>";
+  }
+
+  function render() {
+    var s = SURVEYS[current];
+    form.innerHTML = s.sections.map(function (sec) {
+      return '<section class="part"><h2>' + esc(sec.title) + "</h2>" +
+        (sec.explain ? '<div class="explain"><b>اقرأ للمشارك</b>' + esc(sec.explain) + "</div>" : "") +
+        sec.questions.map(fieldHtml).join("") + "</section>";
+    }).join("");
+    document.querySelectorAll(".who button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.survey === current)); });
+    restore();
+    updateProgress();
+  }
+
+  // ── Read / write answers ────────────────────────────────────────────
+  function allQuestions() { return SURVEYS[current].sections.reduce(function (a, s) { return a.concat(s.questions); }, []); }
+
+  function readAnswers() {
+    var a = {};
+    allQuestions().forEach(function (q) {
+      if (q.type === "multi") a[q.id] = [].map.call(form.querySelectorAll('input[name="' + q.id + '"]:checked'), function (i) { return i.value; });
+      else if (q.type === "single" || q.type === "scale") { var c = form.querySelector('input[name="' + q.id + '"]:checked'); a[q.id] = c ? c.value : ""; }
+      else if (q.type === "consent") a[q.id] = $("#" + q.id).checked;
+      else a[q.id] = $("#" + q.id).value.trim();
+      if (q.other) { var o = $("#" + q.id + "__other"); a[q.id + "__other"] = o ? o.value.trim() : ""; }
+    });
+    return a;
+  }
+
+  function restore() {
+    var remembered = store.get("remember", {});
+    var draft = store.get("draft:" + current, {});
+    allQuestions().forEach(function (q) {
+      var v = draft[q.id] !== undefined ? draft[q.id] : (q.remember ? remembered[q.id] : undefined);
+      if (v === undefined) return;
+      if (q.type === "multi") form.querySelectorAll('input[name="' + q.id + '"]').forEach(function (i) { i.checked = v.indexOf(i.value) !== -1; });
+      else if (q.type === "single" || q.type === "scale") form.querySelectorAll('input[name="' + q.id + '"]').forEach(function (i) { i.checked = i.value === v; });
+      else if (q.type === "consent") $("#" + q.id).checked = !!v;
+      else $("#" + q.id).value = v;
+      if (q.other) {
+        var o = $("#" + q.id + "__other");
+        var ov = draft[q.id + "__other"] !== undefined ? draft[q.id + "__other"] : (q.remember ? remembered[q.id + "__other"] : "");
+        if (o && ov) o.value = ov;
+      }
+    });
+    syncOtherBoxes();
+  }
+
+  function hasOther(q, a) { var v = a[q.id]; return Array.isArray(v) ? v.indexOf(OTHER) !== -1 : v === OTHER; }
+
+  function syncOtherBoxes() {
+    var a = readAnswers();
+    allQuestions().forEach(function (q) {
+      if (!q.other) return;
+      var box = $("#" + q.id + "__other");
+      if (box) box.classList.toggle("show", hasOther(q, a));
+    });
+  }
+
+  function isAnswered(q, a) {
+    var v = a[q.id];
+    if (q.type === "multi") return v.length > 0 && (!hasOther(q, a) || v.length > 1 || a[q.id + "__other"]);
+    if (q.type === "consent") return v === true;
+    if (q.other && v === OTHER) return !!a[q.id + "__other"];
+    return v !== "" && v !== undefined;
+  }
+
+  function updateProgress() {
+    var a = readAnswers();
+    var qs = allQuestions().filter(function (q) { return q.type !== "textarea"; });
+    var done = qs.filter(function (q) { return isAnswered(q, a); }).length;
+    $("#progressText").textContent = done + " من " + qs.length + " أسئلة";
+    $("#progressFill").style.width = (qs.length ? (done / qs.length) * 100 : 0) + "%";
+  }
+
+  var saveTimer;
+  /** Keep the draft (and the interviewer's name and city for next time). */
+  function saveNow() {
+    clearTimeout(saveTimer);
+    var a = readAnswers();
+    store.set("draft:" + current, a);
+    var r = store.get("remember", {});
+    allQuestions().forEach(function (qq) { if (qq.remember) { r[qq.id] = a[qq.id]; if (qq.other) r[qq.id + "__other"] = a[qq.id + "__other"]; } });
+    store.set("remember", r);
+  }
+  function onChange(e) {
+    if (e.target.matches('input[type="radio"], input[type="checkbox"], select')) syncOtherBoxes();
+    var q = e.target.closest(".q");
+    if (q) q.classList.remove("invalid");
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveNow, 250);
+    updateProgress();
+  }
+  form.addEventListener("input", onChange);
+  form.addEventListener("change", onChange);
+
+  // ── WhatsApp number ─────────────────────────────────────────────────
+  function normalizeNumber(raw) {
+    var d = toLatin(raw).replace(/[^\d+]/g, "");
+    if (d.indexOf("+") === 0) d = d.slice(1);
+    if (d.indexOf("00") === 0) d = d.slice(2);
+    if (/^0\d{9}$/.test(d)) d = "218" + d.slice(1);       // 09X XXX XXXX (Libya)
+    if (/^9\d{8}$/.test(d)) d = "218" + d;               // 9X XXX XXXX
+    d = d.replace(/^2180/, "218");                        // +218 091…
+    return /^\d{9,15}$/.test(d) ? d : null;
+  }
+  function waNumber() { return store.get("waNumber", "") || normalizeNumber(DEFAULT_WHATSAPP_NUMBER) || ""; }
+  function refreshNotice() { $("#setupNotice").hidden = !!waNumber(); }
+
+  var dlg = $("#settings");
+  function openSettings() {
+    var n = waNumber();
+    $("#waNumber").value = n ? "+" + n : "";
+    $("#waError").style.display = "none";
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+  }
+  $("#openSettings").addEventListener("click", openSettings);
+  document.querySelectorAll("[data-open-settings]").forEach(function (b) { b.addEventListener("click", openSettings); });
+  $("#closeSettings").addEventListener("click", function () { dlg.close(); });
+  $("#settingsForm").addEventListener("submit", function (e) {
+    var n = normalizeNumber($("#waNumber").value);
+    if (!n) { e.preventDefault(); $("#waError").style.display = "block"; return; }
+    store.set("waNumber", n);
+    refreshNotice();
+    if (!$("#review").hidden) buildReview();
+  });
+
+  // ── Validate → review ───────────────────────────────────────────────
+  var reviewText = "";
+  var surveyId = "";
+
+  function validate() {
+    var a = readAnswers();
+    var first = null;
+    allQuestions().forEach(function (q) {
+      var el = form.querySelector('[data-q="' + q.id + '"]');
+      var bad = !!q.required && !isAnswered(q, a); // must be a real boolean for classList.toggle
+      if (!bad && q.type === "tel" && a[q.id] && !normalizeNumber(a[q.id])) bad = true;
+      if (!bad && q.type === "number" && a[q.id] && !/^\d+([.,]\d+)?$/.test(toLatin(a[q.id]))) bad = true;
+      el.classList.toggle("invalid", bad);
+      if (bad) {
+        var err = $("#e_" + q.id);
+        if (q.type === "tel" && a[q.id]) err.textContent = "اكتب رقم هاتف صحيحاً، أو اتركه فارغاً.";
+        if (q.type === "number" && a[q.id]) err.textContent = "اكتب رقماً فقط، مثل 150.";
+        if (!first) first = el;
+      }
+    });
+    if (first) {
+      first.scrollIntoView({ behavior: "smooth", block: "center" });
+      var focusable = first.querySelector("input, select, textarea");
+      if (focusable) setTimeout(function () { focusable.focus({ preventScroll: true }); }, 300);
+      return null;
+    }
+    return a;
+  }
+
+  function newId() {
+    var c = "23456789ABCDEFGHJKMNPQRSTUVWXYZ", s = "";
+    for (var i = 0; i < 4; i++) s += c[Math.floor(Math.random() * c.length)];
+    return s;
+  }
+
+  function stamp() {
+    var d = new Date();
+    try { return new Intl.DateTimeFormat("ar-LY", { dateStyle: "medium", timeStyle: "short" }).format(d); } catch (e) { return d.toLocaleString(); }
+  }
+
+  /** The message sent to WhatsApp: only answered questions, grouped by section. */
+  function buildText(a) {
+    var s = SURVEYS[current];
+    var lines = ["*📋 دراسة سوق تواصل: " + s.name + "*", "الرقم: " + surveyId + "    " + stamp(), ""];
+    s.sections.forEach(function (sec) {
+      var body = [];
+      sec.questions.forEach(function (q) {
+        if (q.type === "consent") return;
+        var v = a[q.id];
+        // "Other" answers show what was typed, not the word "other"
+        if (Array.isArray(v)) {
+          v = v.map(function (x) { return x === OTHER && a[q.id + "__other"] ? a[q.id + "__other"] : x; }).join("، ");
+        } else if (v === OTHER && a[q.id + "__other"]) {
+          v = a[q.id + "__other"];
+        } else if (q.type === "scale" && v) {
+          v = v + " من 5";
+        } else if (q.type === "number" && v) {
+          v = toLatin(v).replace(",", ".");
+        }
+        // A question already ending in "؟" doesn't need a colon too
+        var label = /[؟?]$/.test(q.label) ? q.label : q.label + ":";
+        if (v) body.push("▫️ *" + label + "* " + v);
+      });
+      if (body.length) { lines.push("*" + sec.title + "*"); lines = lines.concat(body); lines.push(""); }
+    });
+    lines.push("✅ وافق المشارك على المشاركة.");
+    return lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  }
+
+  function waUrl(text) {
+    var n = waNumber();
+    return (n ? "https://wa.me/" + n : "https://wa.me/") + "?text=" + encodeURIComponent(text);
+  }
+
+  // Show WhatsApp-style formatting (*bold*) in the preview bubble
+  function bubbleHtml(text) {
+    return esc(text).replace(/\*([^*\n]+)\*/g, "<b>$1</b>") +
+      '<span class="time">' + new Intl.DateTimeFormat("ar-LY", { hour: "numeric", minute: "2-digit" }).format(new Date()) + "</span>";
+  }
+
+  function buildReview() {
+    var a = readAnswers();
+    reviewText = buildText(a);
+    $("#bubble").innerHTML = bubbleHtml(reviewText);
+    $("#sendWa").href = waUrl(reviewText);
+  }
+
+  $("#finish").addEventListener("click", function () {
+    saveNow();
+    var a = validate();
+    if (!a) return;
+    if (!surveyId) surveyId = (current === "provider" ? "P-" : "C-") + newId();
+    buildReview();
+    form.hidden = true;
+    $("#review").hidden = false;
+    $("#bar").hidden = true;
+    $("#toast").textContent = waNumber() ? "" : "حدّد رقم الاستلام أولاً، أو اختر جهة الإرسال من واتساب.";
+    $("#shareOther").hidden = !navigator.share;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    $("#review h2").setAttribute("tabindex", "-1");
+    $("#review h2").focus({ preventScroll: true });
+  });
+
+  $("#backToEdit").addEventListener("click", function () {
+    $("#review").hidden = true;
+    form.hidden = false;
+    $("#bar").hidden = false;
+  });
+
+  function startNew() {
+    saveNow(); // keeps the interviewer's name and city
+    store.del("draft:" + current);
+    surveyId = "";
+    $("#review").hidden = true;
+    form.hidden = false;
+    $("#bar").hidden = false;
+    render();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("#newSurvey").addEventListener("click", startNew);
+
+  // ── Sending & history ───────────────────────────────────────────────
+  function logSent(how) {
+    var a = readAnswers();
+    var list = store.get("history", []);
+    var existing = list.filter(function (h) { return h.id === surveyId; })[0];
+    if (existing) { existing.how = how; existing.at = Date.now(); existing.text = reviewText; }
+    else list.unshift({ id: surveyId, type: current, at: Date.now(), name: a.p_name || a.c_name || "", city: a.city === OTHER ? a.city__other : a.city, text: reviewText, how: how });
+    store.set("history", list.slice(0, 100));
+    renderHistory();
+  }
+
+  $("#sendWa").addEventListener("click", function () {
+    $("#sendWa").href = waUrl(reviewText);
+    logSent("واتساب");
+    $("#toast").textContent = "فُتح واتساب. اضغط إرسال هناك، ثم ابدأ استبياناً جديداً.";
+  });
+
+  $("#copyText").addEventListener("click", function () {
+    var done = function () { logSent("نسخ"); $("#toast").textContent = "نُسخ النص. الصقه في واتساب."; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(reviewText).then(done, function () { fallbackCopy(); done(); });
+    } else { fallbackCopy(); done(); }
+  });
+  function fallbackCopy() {
+    var t = document.createElement("textarea");
+    t.value = reviewText; t.setAttribute("readonly", ""); t.style.position = "fixed"; t.style.opacity = "0";
+    document.body.appendChild(t); t.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(t);
+  }
+
+  $("#shareOther").addEventListener("click", function () {
+    if (!navigator.share) return;
+    navigator.share({ text: reviewText }).then(function () {
+      logSent("مشاركة");
+      $("#toast").textContent = "تمت المشاركة.";
+    }, function () {});
+  });
+
+  function renderHistory() {
+    var list = store.get("history", []);
+    var today = new Date().toDateString();
+    var todayCount = list.filter(function (h) { return new Date(h.at).toDateString() === today; }).length;
+    $("#histSummary").textContent = list.length
+      ? "اليوم: " + todayCount + "، والإجمالي على هذا الهاتف: " + list.length + ". يمكنك إعادة إرسال أي استبيان."
+      : "لا توجد استبيانات مرسلة بعد.";
+    $("#histList").innerHTML = list.slice(0, 30).map(function (h) {
+      var when = new Intl.DateTimeFormat("ar-LY", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }).format(new Date(h.at));
+      return "<li><span class=\"who-tag\">" + (h.type === "provider" ? "مقدم خدمة" : "زبون") + "</span>" +
+        '<span class="meta">' + esc(h.name || "بدون اسم") + (h.city ? "، " + esc(h.city) : "") + "<small>" + esc(h.id) + "، " + when + "</small></span>" +
+        '<a href="' + esc(waUrl(h.text)) + '" target="_blank" rel="noopener">إعادة الإرسال</a></li>';
+    }).join("");
+  }
+
+  // ── Switch survey type ──────────────────────────────────────────────
+  document.querySelectorAll(".who button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (b.dataset.survey === current) return;
+      saveNow();
+      current = b.dataset.survey;
+      store.set("current", current);
+      surveyId = "";
+      $("#review").hidden = true;
+      form.hidden = false;
+      $("#bar").hidden = false;
+      render();
+    });
+  });
+
+  render();
+  refreshNotice();
+  renderHistory();
+})();
+</script>
+</body>
+</html>
